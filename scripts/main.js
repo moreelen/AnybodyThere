@@ -4,12 +4,12 @@ $(function(){
 	var y = 0;
 	var pX = 0;
 	var pY = 0;
-	/* var dots = [
+	var dots = [
 		{
 			x: 0,
 			y: 0
 		}
-	]; */
+	];
 
 	function getCoordinates(){
 		x = event.clientX;
@@ -27,10 +27,17 @@ $(function(){
 		// $theBlack.append("<div class='dot' id='dot" + i + "'></div>")
 	}
 
+	function pushCoordinates(){
+		dots.push({x: pX, y: pY});
+		console.log(dots);
+		createDot();
+	}
+
 	$theBlack.on('click.black', function(){
 		// console.log('click');
 		getCoordinates();
 		percentCoordinates();
-		createDot();
+		pushCoordinates();
 	});
+
 });
