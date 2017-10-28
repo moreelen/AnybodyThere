@@ -4,6 +4,7 @@ $(function(){
 	var y = 0;
 	var user = Date.now();
 	var dots = [];
+	var initialDataLoaded = false;
 
 	// Initialize Firebase
   var config = {
@@ -43,10 +44,22 @@ $(function(){
 
 	const database = firebase.database().ref();
 
+	database.on("child_added", snapshot => {
+		if (initialDataLoaded) {
+    	var dataNew = snapshot.val();
+    	console.log(dataNew);
+			if (dataNew.user !== user) {
+				createDot(dataNew.date, dataNew.x, dataNew.y);
+			}
+  	} else {
+  	}
+	});
+
 	database.on("value", snapshot => {
 		const data = snapshot.val();
 		console.log('new data', data);
 		dots = data;
+		initialDataLoaded = true;
 	});
 
 	$theBlack.on('click.black', function(){
