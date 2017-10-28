@@ -49,7 +49,7 @@ $(function(){
     	var dataNew = snapshot.val();
     	console.log(dataNew);
 			if (dataNew.user !== user) {
-				createDot(dataNew.date, dataNew.x, dataNew.y);
+				createDot(dataNew.dot, dataNew.x, dataNew.y);
 			}
   	} else {
   	}
