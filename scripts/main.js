@@ -2,25 +2,12 @@ $(function(){
 	var $theBlack = $('#theBlack');
 	var x = 0;
 	var y = 0;
-	var pX = 0;
-	var pY = 0;
-	var dots = [
-		{
-			x: 0,
-			y: 0
-		}
-	];
+	var dots = [];
 
 	function getCoordinates(){
-		x = event.clientX;
-		y = event.clientY;
+		x = parseInt((event.clientX / window.innerWidth) * 100);
+	 	y = parseInt((event.clientY / window.innerHeight) * 100);
 		// console.log('x', x, 'y', y);
-	}
-
-	function percentCoordinates(){
-		pX = parseInt((x / window.innerWidth) * 100);
-		pY = parseInt((y / window.innerHeight) * 100);
-		// console.log('pX', pX, 'pY', pY);
 	}
 
 	function createDot(){
@@ -28,15 +15,14 @@ $(function(){
 	}
 
 	function pushCoordinates(){
-		dots.push({x: pX, y: pY});
-		console.log(dots);
+		dots.push({x: x, y: y});
+		// console.log(dots);
 		createDot();
 	}
 
 	$theBlack.on('click.black', function(){
 		// console.log('click');
 		getCoordinates();
-		percentCoordinates();
 		pushCoordinates();
 	});
 
