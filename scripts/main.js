@@ -17,12 +17,14 @@ $(function(){
   };
   firebase.initializeApp(config);
 
+	// Get the coordinates of the mouse.
 	function getCoordinates(){
 		x = parseInt((event.clientX / window.innerWidth) * 100);
 	 	y = parseInt((event.clientY / window.innerHeight) * 100);
 		// console.log('x', x, 'y', y);
 	}
 
+// Creates a dot.
 	function createDot(id, xVal, yVal){
 		$theBlack.append("<div class='dot' id='" + id + "'></div>");
 		$("#" + id).css({
@@ -31,6 +33,7 @@ $(function(){
 		});
 	}
 
+	// Creates an object to add to the local array and sends it to the database.
 	function pushCoordinates(id){
 		dots.push({
 			dot: id,
@@ -42,8 +45,10 @@ $(function(){
 		database.set(dots);
 	}
 
+	// Creates object with database from firebase.
 	const database = firebase.database().ref();
 
+	// Checks for new data in database and if there is, creates dots for new data.
 	database.on("child_added", snapshot => {
 		if (initialDataLoaded) {
     	var dataNew = snapshot.val();
@@ -55,6 +60,7 @@ $(function(){
   	}
 	});
 
+	// First call for database.
 	database.on("value", snapshot => {
 		const data = snapshot.val();
 		console.log('new data', data);
@@ -62,6 +68,7 @@ $(function(){
 		initialDataLoaded = true;
 	});
 
+	// When a user clicks, push the coordinates to the database and create the dot.
 	$theBlack.on('click.black', function(){
 		// console.log('click');
 		date = Date.now();
@@ -70,10 +77,17 @@ $(function(){
 		createDot(date, x, y);
 	});
 
-});
+	// Cycle through and remove old data.
+	setInterval (function(){
+		var now = Date.now();
+		var cutoff = now - 3600000;
+		var old = database.orderByChild('dot').endAt(cutoff).limitToLast(1);
+		old.on('child_added', function(snapshot) {
+    	snapshot.ref.remove();
+		});
+	}, 5000);
 
-// If length of data is larger than dots. Difference = newdots.
-// Grab the latest in data.
+});
 
 // Sam Browne
 // Josh Unsworth
