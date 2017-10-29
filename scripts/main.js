@@ -2,6 +2,9 @@ $(function(){
 	var $theBlack = $('#theBlack');
 	var $style = $('style');
 	var $window = $(window);
+	var $help = $('#help');
+	var $helpText = $('#helpText');
+	var showHelp = 0;
 	var x = 0;
 	var y = 0;
 	var user = Date.now();
@@ -54,7 +57,7 @@ $(function(){
 		$("#" + id).css({
 			"background-color": colour,
 			"animation-name": "dot" + id,
-			"animation-duration": "3s"
+			"animation-duration": "6s"
 		});
 		var coordinates = percentageToCoord(xVal, yVal);
 		var startXPosition = (coordinates.x - 5);
@@ -64,7 +67,7 @@ $(function(){
 		$style.append("@keyframes dot" + id + " { 0%{ width: 10px; height: 10px; border-radius: 10px; opacity: 1; top: " + startYPosition + "px; left: " + startXPosition + "px; } 100%{ width: 200px; height: 200px; border-radius: 300px; opacity: 0; top: " + endYPosition + "px; left: " + endXPosition + "px; } }");
 		setTimeout(function(){
 			$("#" + id).remove();
-		}, 3000);
+		}, 6000);
 	}
 
 	// Turns incoming percentage coordinates into pixel coordinates for that browser window.
@@ -91,6 +94,28 @@ $(function(){
 		});
 		// console.log(dots);
 		database.set(dots);
+	}
+
+	function showHelpText(){
+		console.log('show');
+		$helpText.css({
+			"display": "block"
+		});
+		$help.html('<span><a href="#">X</a></span>').css({
+			"color": "white"
+		});
+		showHelp = 1;
+	}
+
+	function hideHelpText(){
+		console.log('hide');
+		$helpText.css({
+			"display": "none"
+		});
+		$help.html('<span><a href="#">?</a></span>').css({
+			"color": "#202020"
+		});
+		showHelp = 0;
 	}
 
 	// Creates object with database from firebase.
@@ -124,6 +149,17 @@ $(function(){
 		getCoordinates();
 		pushCoordinates(date);
 		createDot(date, x, y, userColour);
+	});
+
+	// Click on help shows div. Otherwise hides it.
+	$help.on('click.help', function(){
+		if (showHelp === 0){
+			showHelpText();
+			console.log('showHelp is true');
+		} else {
+			hideHelpText();
+			console.log('showhelp is false');
+		}
 	});
 
 	// Cycle through and remove old data.

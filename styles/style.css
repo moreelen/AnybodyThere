@@ -2,6 +2,17 @@ body {
 	background-color: black;
 }
 
+a {
+	text-decoration: none;
+	color: inherit;
+	font-family: 'Josefin Slab', serif;
+}
+
+h1	{
+	font-family: 'Josefin Slab', serif;
+	font-size: 50px;
+}
+
 #theBlack {
 	background-color: black;
 	width: 100%;
@@ -9,9 +20,11 @@ body {
 	position: relative;
 }
 
-#theBlack div {
-	color: #202020;
+#blackContainer {
+	color: black;
 	font-size: 50px;
+	font-family: 'Josefin Slab', serif;
+	z-index: 3;
 	/* height: 100vh;*/
 	position: absolute;
 	top: 50vh;
@@ -23,4 +36,27 @@ body {
 	height: 10px;
 	background-color: white;
 	position: absolute;
+}
+
+#help {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	color: #202020;
+	font-size: 50px;
+	z-index: 2;
+}
+
+#helpText {
+	display: none;
+	position: absolute;
+	top: 30%;
+	left: 100px;
+	color: white;
+	font-family: 'Raleway', sans-serif;
+}
+
+#helpText a {
+	font-family: 'Raleway', sans-serif;
+	text-decoration: underline;
 }
