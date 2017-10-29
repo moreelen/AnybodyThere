@@ -5,6 +5,7 @@ $(function(){
 	var x = 0;
 	var y = 0;
 	var user = Date.now();
+	var userColour = null;
 	var dots = [];
 	var initialDataLoaded = false;
 
@@ -19,6 +20,22 @@ $(function(){
   };
   firebase.initializeApp(config);
 
+	// Set colour of the user. Array of colours, pick from array.
+	function setColour(){
+		var colours = [
+			'#F3E7D7',
+			'#F8C7C9',
+			'#C7B9C5',
+			'#F8DAFB',
+			'#DADDFB',
+			'#DAFBF8'
+		];
+
+		userColour = colours[Math.floor(Math.random() * 5)];
+	}
+	setColour();
+	console.log('userColour', userColour);
+
 	// Get the coordinates of the mouse.
 	function getCoordinates(){
 		x = parseInt((event.clientX / window.innerWidth) * 100);
@@ -26,12 +43,11 @@ $(function(){
 		// console.log('x', x, 'y', y);
 	}
 
-// Creates a dot.
-	function createDot(id, xVal, yVal){
+	// Creates a dot.
+	function createDot(id, xVal, yVal, colour){
 		$theBlack.append("<div class='dot' id='" + id + "'></div>");
 		$("#" + id).css({
-			// "top": yVal + "%",
-			// "left": xVal + "%",
+			"background-color": colour,
 			"animation-name": "dot" + id,
 			"animation-duration": "3s"
 		});
@@ -64,6 +80,7 @@ $(function(){
 		dots.push({
 			dot: id,
 			user: user,
+			userColour: userColour,
 			x: x,
 			y: y
 		});
@@ -80,7 +97,7 @@ $(function(){
     	var dataNew = snapshot.val();
     	console.log(dataNew);
 			if (dataNew.user !== user) {
-				createDot(dataNew.dot, dataNew.x, dataNew.y);
+				createDot(dataNew.dot, dataNew.x, dataNew.y, dataNew.userColour);
 			}
   	} else {
   	}
@@ -100,7 +117,7 @@ $(function(){
 		date = Date.now();
 		getCoordinates();
 		pushCoordinates(date);
-		createDot(date, x, y);
+		createDot(date, x, y, userColour);
 	});
 
 	// Cycle through and remove old data.
