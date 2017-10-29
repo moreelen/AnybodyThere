@@ -1,22 +1,36 @@
 $(function(){
+	// Binding
 	var $theBlack = $('#theBlack');
 	var $style = $('style');
 	var $window = $(window);
 	var $help = $('#help');
 	var $helpText = $('#helpText');
+
+	// Initialise variables.
 	var showHelp = 0;
 	var x = 0;
 	var y = 0;
 	var user = Date.now();
 	var userColour = null;
-	var dots = [{
-		dot: 9999999999999999999999,
-		user: 'test',
-		userColour: '#000000',
-		x: 0,
-		y: 0
-	}];
+	var dots = [];
 	var initialDataLoaded = false;
+
+	// Sounds
+	var chime1 = new Howl({
+  	src: ['./sounds/chime1.mp3']
+	});
+	var chime2 = new Howl({
+  	src: ['./sounds/chime2.mp3']
+	});
+	var chime3 = new Howl({
+  	src: ['./sounds/chime3.mp3']
+	});
+	var chime4 = new Howl({
+  	src: ['./sounds/chime4.mp3']
+	});
+	var chime5 = new Howl({
+  	src: ['./sounds/chime5.mp3']
+	});
 
 	// Initialize Firebase
   var config = {
