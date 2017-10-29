@@ -73,7 +73,7 @@ $(function(){
 		$("#" + id).css({
 			"background-color": colour,
 			"animation-name": "dot" + id,
-			"animation-duration": "6s"
+			"animation-duration": "4s"
 		});
 		var coordinates = percentageToCoord(xVal, yVal);
 		var startXPosition = (coordinates.x - 5);
@@ -81,12 +81,10 @@ $(function(){
 		var endXPosition = (coordinates.x - 100);
 		var endYPosition = (coordinates.y - 100);
 		$style.append("@keyframes dot" + id + " { 0%{ width: 10px; height: 10px; border-radius: 10px; opacity: 1; top: " + startYPosition + "px; left: " + startXPosition + "px; } 100%{ width: 200px; height: 200px; border-radius: 300px; opacity: 0; top: " + endYPosition + "px; left: " + endXPosition + "px; } }");
-		var chime = 'chime' + sound;
-		console.log(chime);
-		chime.play();
+		chime1.play();
 		setTimeout(function(){
 			$("#" + id).remove();
-		}, 6000);
+		}, 4000);
 	}
 
 	// Turns incoming percentage coordinates into pixel coordinates for that browser window.
