@@ -81,7 +81,23 @@ $(function(){
 		var endXPosition = (coordinates.x - 100);
 		var endYPosition = (coordinates.y - 100);
 		$style.append("@keyframes dot" + id + " { 0%{ width: 10px; height: 10px; border-radius: 10px; opacity: 1; top: " + startYPosition + "px; left: " + startXPosition + "px; } 100%{ width: 200px; height: 200px; border-radius: 300px; opacity: 0; top: " + endYPosition + "px; left: " + endXPosition + "px; } }");
-		chime1.play();
+		switch (sound) {
+			case 1:
+				chime1.play();
+				break;
+			case 2:
+				chime2.play();
+				break;
+			case 3:
+				chime3.play();
+				break;
+			case 4:
+				chime4.play();
+				break;
+			case 5:
+				chime5.play();
+				break;
+		}
 		setTimeout(function(){
 			$("#" + id).remove();
 		}, 4000);
