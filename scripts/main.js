@@ -127,21 +127,15 @@ $(function(){
 	});
 
 	// Cycle through and remove old data.
-	/*setInterval (function(){
-		var now = Date.now();
-		var cutoff = now - 300000;
-		var old = database.orderByChild('dot').endAt(cutoff).limitToLast(1);
-		old.on('child_added', function(snapshot) {
-    	snapshot.ref.remove();
+	setInterval (function(){
+		database.orderByValue().on("value", snapshot => {
+			snapshot.forEach(function(data) {
+				var key = data.key;
+				if (key !== '0'){
+					data.ref.remove();
+				}
+  		});
 		});
-	}, 5000);*/
+	}, 10000);
 
 });
-
-// Sam Browne
-// Josh Unsworth
-// Roman
-// Liv
-// Josh Balfour
-// Sophie
-// Georgia
