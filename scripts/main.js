@@ -15,7 +15,7 @@ $(function(){
 	var dots = [];
 	var initialDataLoaded = false;
 
-	// Sounds
+	// Initialise sounds
 	var chime1 = new Howl({
   	src: ['./sounds/chime1.mp3']
 	});
@@ -31,6 +31,8 @@ $(function(){
 	var chime5 = new Howl({
   	src: ['./sounds/chime5.mp3']
 	});
+
+	var userSound = Math.floor(Math.random() * 5) +1
 
 	// Initialize Firebase
   var config = {
@@ -66,7 +68,7 @@ $(function(){
 	}
 
 	// Creates a dot.
-	function createDot(id, xVal, yVal, colour){
+	function createDot(id, xVal, yVal, colour, sound){
 		$theBlack.append("<div class='dot' id='" + id + "'></div>");
 		$("#" + id).css({
 			"background-color": colour,
@@ -79,6 +81,9 @@ $(function(){
 		var endXPosition = (coordinates.x - 100);
 		var endYPosition = (coordinates.y - 100);
 		$style.append("@keyframes dot" + id + " { 0%{ width: 10px; height: 10px; border-radius: 10px; opacity: 1; top: " + startYPosition + "px; left: " + startXPosition + "px; } 100%{ width: 200px; height: 200px; border-radius: 300px; opacity: 0; top: " + endYPosition + "px; left: " + endXPosition + "px; } }");
+		var chime = 'chime' + sound;
+		console.log(chime);
+		chime.play();
 		setTimeout(function(){
 			$("#" + id).remove();
 		}, 6000);
@@ -103,6 +108,7 @@ $(function(){
 			dot: id,
 			user: user,
 			userColour: userColour,
+			userSound: userSound,
 			x: x,
 			y: y
 		});
@@ -141,7 +147,7 @@ $(function(){
     	var dataNew = snapshot.val();
     	console.log(dataNew);
 			if (dataNew.user !== user) {
-				createDot(dataNew.dot, dataNew.x, dataNew.y, dataNew.userColour);
+				createDot(dataNew.dot, dataNew.x, dataNew.y, dataNew.userColour, dataNew.userSound);
 			}
   	} else {
   	}
@@ -162,7 +168,7 @@ $(function(){
 		date = Date.now();
 		getCoordinates();
 		pushCoordinates(date);
-		createDot(date, x, y, userColour);
+		createDot(date, x, y, userColour, userSound);
 	});
 
 	// Click on help shows div. Otherwise hides it.
