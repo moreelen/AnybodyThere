@@ -6,7 +6,13 @@ $(function(){
 	var y = 0;
 	var user = Date.now();
 	var userColour = null;
-	var dots = [];
+	var dots = [{
+		dot: 9999999999999999999999,
+		user: 'test',
+		userColour: '#000000',
+		x: 0,
+		y: 0
+	}];
 	var initialDataLoaded = false;
 
 	// Initialize Firebase
@@ -23,15 +29,14 @@ $(function(){
 	// Set colour of the user. Array of colours, pick from array.
 	function setColour(){
 		var colours = [
-			'#F3E7D7',
-			'#F8C7C9',
-			'#C7B9C5',
-			'#F8DAFB',
-			'#DADDFB',
-			'#DAFBF8'
+			'#F8F087',
+			'#B7E3C0',
+			'#B8D0DD',
+			'#F39DD4',
+			'#FFA398'
 		];
 
-		userColour = colours[Math.floor(Math.random() * 5)];
+		userColour = colours[Math.floor(Math.random() * 4)];
 	}
 	setColour();
 	console.log('userColour', userColour);
@@ -107,6 +112,7 @@ $(function(){
 	database.on("value", snapshot => {
 		const data = snapshot.val();
 		console.log('new data', data);
+		// database.set(dots);
 		dots = data;
 		initialDataLoaded = true;
 	});
@@ -121,14 +127,14 @@ $(function(){
 	});
 
 	// Cycle through and remove old data.
-	setInterval (function(){
+	/*setInterval (function(){
 		var now = Date.now();
-		var cutoff = now - 3600000;
+		var cutoff = now - 300000;
 		var old = database.orderByChild('dot').endAt(cutoff).limitToLast(1);
 		old.on('child_added', function(snapshot) {
     	snapshot.ref.remove();
 		});
-	}, 5000);
+	}, 5000);*/
 
 });
 
