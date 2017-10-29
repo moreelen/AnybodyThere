@@ -1,5 +1,7 @@
 $(function(){
 	var $theBlack = $('#theBlack');
+	var $style = $('style');
+	var $window = $(window);
 	var x = 0;
 	var y = 0;
 	var user = Date.now();
@@ -28,9 +30,33 @@ $(function(){
 	function createDot(id, xVal, yVal){
 		$theBlack.append("<div class='dot' id='" + id + "'></div>");
 		$("#" + id).css({
-			"top": yVal + "%",
-			"left": xVal + "%"
+			// "top": yVal + "%",
+			// "left": xVal + "%",
+			"animation-name": "dot" + id,
+			"animation-duration": "3s"
 		});
+		var coordinates = percentageToCoord(xVal, yVal);
+		var startXPosition = (coordinates.x - 5);
+		var startYPosition = (coordinates.y - 5);
+		var endXPosition = (coordinates.x - 100);
+		var endYPosition = (coordinates.y - 100);
+		$style.append("@keyframes dot" + id + " { 0%{ width: 10px; height: 10px; border-radius: 10px; opacity: 1; top: " + startYPosition + "px; left: " + startXPosition + "px; } 100%{ width: 200px; height: 200px; border-radius: 300px; opacity: 0; top: " + endYPosition + "px; left: " + endXPosition + "px; } }");
+		setTimeout(function(){
+			$("#" + id).remove();
+		}, 3000);
+	}
+
+	// Turns incoming percentage coordinates into pixel coordinates for that browser window.
+	function percentageToCoord(xPercent, yPercent){
+		var returnCoord = {};
+		var windowHeight = $window.height();
+		var windowWidth = $window.width();
+
+		returnCoord["x"] = parseInt((xPercent / 100) * windowWidth);
+		returnCoord["y"] = parseInt((yPercent / 100) *  windowHeight);
+
+		return returnCoord;
+
 	}
 
 	// Creates an object to add to the local array and sends it to the database.
