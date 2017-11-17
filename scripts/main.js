@@ -209,3 +209,7 @@ $(function(){
 	}, 10000);
 
 });
+
+// TODO: create gitignore - add node_module and .Ds_Store
+// TODO: create readme file - what it is, install, test it and run it
+// TODO: create s3 pocket and put chimes in there
